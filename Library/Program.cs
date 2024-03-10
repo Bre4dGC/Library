@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.Remoting.Channels;
 
 namespace Library
 {
@@ -11,6 +10,7 @@ namespace Library
 
             ConsoleColor ForegroundColor = Console.ForegroundColor;
             ConsoleColor BackgroundColor = Console.BackgroundColor;
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
 
             string[,] author = {
             { " М.Лермонтов " }, { "И.Тургенев" }, { "Л.Тостой" },
@@ -48,7 +48,7 @@ namespace Library
                                   "\n'4' - Рандомная книга\n'5' - Содержимое корзины\n'6' - выход");
 
                 Console.SetCursorPosition(0, 0);
-                Console.WriteLine("\tДобро пожаловать в библиотеку");
+                Console.WriteLine("\t\t |БИБЛИОТЕКА|");
                 Console.Write("\nВаш выбор: ");
 
                 switch (Console.ReadLine())
@@ -67,7 +67,9 @@ namespace Library
                             WriteError(); break;
                         }
 
-                        while (true)
+                        bool b = true;
+
+                        while (b)
                         {
                             Console.WriteLine("\nВаша книга - " + books[rows, cols]);
                             Console.WriteLine("\nХотите добавить книгу в корзину - да|нет");
@@ -76,17 +78,19 @@ namespace Library
                                 case "да":
                                     shoppingCart = books[rows, cols];
                                     Console.Write("\nКнига добавлена в корзину");
+                                    b = false;
                                     break;
 
                                 case "нет":
                                     Console.Write("\nНажмите для продолжения");
+                                    b = false;
                                     break;
 
                                 default:
                                     WriteError();
+                                    b = false;
                                     break;
                             }
-                            Clean(); break;
                         }
                         break;
 
@@ -160,22 +164,33 @@ namespace Library
                         Console.Write("Рандом выбрал - " + books[r, c]);
                         Console.WriteLine("\nХотите добавить книгу в корзину - да|нет");
 
-                        switch (Console.ReadLine().ToLower())
+                        bool d = true;
+
+                        while (d)
                         {
-                            case "да":
-                                shoppingCart = books[r, c];
-                                Console.Write("\nКнига добавлена в корзину");
-                                break;
+                            Console.WriteLine("\nВаша книга - " + books[r, c]);
+                            Console.WriteLine("\nХотите добавить книгу в корзину - да|нет");
+                            switch (Console.ReadLine().ToLower())
+                            {
+                                case "да":
+                                    shoppingCart = books[r, c];
+                                    Console.Write("\nКнига добавлена в корзину");
+                                    d = false;
+                                    break;
 
-                            case "нет":
-                                Console.Write("\nНажмите для продолжения");
-                                break;
+                                case "нет":
+                                    Console.Write("\nНажмите для продолжения");
+                                    d = false;
+                                    break;
 
-                            default:
-                                WriteError();
-                                break;
+                                default:
+                                    WriteError();
+                                    d = false;
+                                    break;
+                            }
+                            Clean();
                         }
-                        Clean(); break;
+                        break;
 
                     case "5":
                         Console.Write("Корзина: ");
