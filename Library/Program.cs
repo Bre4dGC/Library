@@ -56,29 +56,40 @@ namespace Library
                     case "1":
                         Console.Write("\nВведите номер полки: ");
                         int rows = int.Parse(Console.ReadLine()) - 1;
+                        if (rows < 0 || rows >= 9)
+                        {
+                            WriteError(); break;
+                        }
                         Console.Write("Ведите номер книги: ");
                         int cols = int.Parse(Console.ReadLine()) - 1;
-
-                        Console.WriteLine("\nВаша книга - " + books[rows, cols]);
-                        Console.WriteLine("\nХотите добавить книгу в корзину - да|нет");
-
-                        switch (Console.ReadLine().ToLower())
+                        if (cols < 0 || cols >= 3)
                         {
-                            case "да":
-                                shoppingCart = books[rows, cols];
-                                Console.Write("\nКнига добавлена в корзину");
-                                break;
-
-                            case "нет":
-                                Console.Write("\nНажмите для продолжения");
-                                break;
-
-                            default:
-                                WriteError();
-                                break;
+                            WriteError(); break;
                         }
-                        Clean(); break;
-                    
+
+                        while (true)
+                        {
+                            Console.WriteLine("\nВаша книга - " + books[rows, cols]);
+                            Console.WriteLine("\nХотите добавить книгу в корзину - да|нет");
+                            switch (Console.ReadLine().ToLower())
+                            {
+                                case "да":
+                                    shoppingCart = books[rows, cols];
+                                    Console.Write("\nКнига добавлена в корзину");
+                                    break;
+
+                                case "нет":
+                                    Console.Write("\nНажмите для продолжения");
+                                    break;
+
+                                default:
+                                    WriteError();
+                                    break;
+                            }
+                            Clean(); break;
+                        }
+                        break;
+
                     case "2":
                         Console.WriteLine("\nАвторы:");
                         Console.WriteLine();
@@ -96,39 +107,47 @@ namespace Library
                         {
                             case "лермонтов":
                                 Console.WriteLine("\nКниги Лермонтова:");
-                                Console.Write($"\n{books[0, 0]}\n{books[0, 1]}\n{books[0, 2]}");
+                                for (int i = 0; i < books.GetLength(1); i++)
+                                    Console.WriteLine(books[0, i]);
                                 break;
                             case "тургенев":
                                 Console.WriteLine("Книги Тургенева:");
-                                Console.Write($"\n{books[1, 0]}\n{books[1, 1]}\n{books[1, 2]}");
+                                for (int i = 0; i < books.GetLength(1); i++)
+                                    Console.WriteLine(books[1, i]);
                                 break;
                             case "толстой":
                                 Console.WriteLine("\nКниги Тостого:");
-                                Console.Write($"\n{books[2, 0]}\n{books[2, 1]}\n{books[2, 2]}");
+                                for (int i = 0; i < books.GetLength(1); i++)
+                                    Console.WriteLine(books[2, i]);
                                 break;
                             case "достоевский":
-                                Console.WriteLine("Книги Достоевского:");
-                                Console.Write($"\n{books[3, 0]}\n{books[3, 1]}\n{books[3, 2]}");
+                                for (int i = 0; i < books.GetLength(1); i++)
+                                    Console.WriteLine(books[3, i]);
                                 break;
                             case "пушкин":
                                 Console.WriteLine("\nКниги Пушкина:");
-                                Console.Write($"\n{books[4, 0]}\n{books[4, 1]}\n{books[4, 2]}");
+                                for (int i = 0; i < books.GetLength(1); i++)
+                                    Console.WriteLine(books[4, i]);
                                 break;
                             case "гоголь":
                                 Console.WriteLine("Книги Гоголя:");
-                                Console.Write($"\n{books[5, 0]}\n{books[5, 1]}\n{books[5, 2]}");
+                                for (int i = 0; i < books.GetLength(1); i++)
+                                    Console.WriteLine(books[5, i]);
                                 break;
                             case "стокер":
                                 Console.WriteLine("Книги Стокера:");
-                                Console.Write($"\n{books[6, 0]}\n{books[6, 1]}\n{books[6, 2]}");
+                                for (int i = 0; i < books.GetLength(1); i++)
+                                    Console.WriteLine(books[6, i]);
                                 break;
                             case "кинг":
                                 Console.WriteLine("\nКниги Кинга:");
-                                Console.Write($"\n{books[7, 0]}\n{books[7, 1]}\n{books[7, 2]}");
+                                for (int i = 0; i < books.GetLength(1); i++)
+                                    Console.WriteLine(books[7, i]);
                                 break;
                             case "дойл":
                                 Console.WriteLine("Книги Дойла:");
-                                Console.Write($"\n{books[8, 0]}\n{books[8, 1]}\n{books[8, 2]}");
+                                for (int i = 0; i < books.GetLength(1); i++)
+                                    Console.WriteLine(books[8, i]);
                                 break;
                             default:
                                 WriteError();
@@ -139,6 +158,7 @@ namespace Library
                     case "4":
                         int r = rand.Next(0, 8), c = rand.Next(0, 2);
                         Console.Write("Рандом выбрал - " + books[r, c]);
+                        Console.WriteLine("\nХотите добавить книгу в корзину - да|нет");
 
                         switch (Console.ReadLine().ToLower())
                         {
@@ -185,7 +205,7 @@ namespace Library
                                         Console.BackgroundColor = ConsoleColor.DarkBlue;
                                         break;
                                     case "3":
-                                        Console.BackgroundColor = ConsoleColor.DarkYellow;
+                                        Console.BackgroundColor = ConsoleColor.Yellow;
                                         break;
                                     case "4":
                                         Console.BackgroundColor = ConsoleColor.DarkRed;
@@ -225,7 +245,7 @@ namespace Library
 
                             case "3":
                                 Console.ForegroundColor = ForegroundColor;
-                                Console.ForegroundColor = BackgroundColor;
+                                Console.BackgroundColor = BackgroundColor;
                                 break;
 
                             default:
